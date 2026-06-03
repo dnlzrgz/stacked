@@ -1,1 +1,2 @@
-// place files you want to import through the `$lib` alias in this folder.
+export { Task } from './state/task.svelte';
+export { Tasks } from './state/tasks.svelte';
