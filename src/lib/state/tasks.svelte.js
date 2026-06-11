@@ -1,31 +1,72 @@
-import { Task } from './task.svelte';
+class Task {
+	/** @type {string} */
+	id = '';
 
-export class Tasks {
-	tasks = $state([]);
-	top = $derived(this.tasks[0] ?? null);
-	isEmpty = $derived(this.tasks.length === 0);
+	/** @type {string} */
+	title = $state('');
 
+	/**
+	 * @param {{ id?: string, title: string }} params
+	 */
+	constructor({ id = crypto.randomUUID(), title = '' }) {
+		const trimmed = title.trim();
+		if (!trimmed) {
+			throw new Error('A title is required.');
+		}
+
+		this.id = id;
+		this.title = trimmed;
+	}
+
+	/**
+	 * @returns {{ id: string, title: string }}
+	 */
+	toJSON() {
+		return { id: this.id, title: this.title };
+	}
+
+	/**
+	 * @param {{ id: string, title: string }} data
+	 * @returns {Task}
+	 */
+	static fromJSON({ id, title }) {
+		return new Task({ id, title });
+	}
+}
+
+export class Stack {
+	/** @type {Task[]} */
+	stack = $state(this.#load());
+
+	/** @type {Task | null} */
+	top = $derived(this.stack.at(-1) ?? null);
+
+	constructor() {
+		$effect(() => {
+			localStorage.setItem('tasks', JSON.stringify(this.stack));
+		});
+	}
+
+	/**
+	 * Loads tasks from localStorage.
+	 * @returns {Task[]}
+	 */
 	#load() {
-		const saved = localStorage.getItem('tasks');
-		return saved ? JSON.parse(saved).map(Task.fromJSON) : [];
+		try {
+			const saved = localStorage.getItem('tasks');
+			return saved ? JSON.parse(saved).map(Task.fromJSON) : [];
+		} catch {
+			localStorage.removeItem('tasks');
+			return [];
+		}
 	}
 
-	#save() {
-		localStorage.setItem('tasks', JSON.stringify(this.tasks));
+	/** @param {{ title: string }} data*/
+	add({ title }) {
+		this.stack.push(new Task({ title }));
 	}
 
-	push(data) {
-		this.tasks.unshift(data instanceof Task ? data : new Task(data));
-		this.#save();
-	}
-
-	pop() {
-		const task = this.tasks.shift() ?? null;
-		this.#save();
-		return task;
-	}
-
-	clear() {
-		this.tasks = [];
+	remove() {
+		this.stack.pop();
 	}
 }
