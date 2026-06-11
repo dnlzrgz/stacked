@@ -1,3 +1,15 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@font-face {
+	font-family: 'Syne';
+	src: url('/fonts/syne/Syne-VariableFont_wght.woff2') format('woff2');
+	font-weight: 400 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-sans: 'Syne', sans-serif;
+}
