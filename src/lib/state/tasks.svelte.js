@@ -1,3 +1,5 @@
+import { browser } from '$app/environment';
+
 class Task {
 	/** @type {string} */
 	id = '';
@@ -36,15 +38,18 @@ class Task {
 
 export class Stack {
 	/** @type {Task[]} */
-	stack = $state(this.#load());
+	stack = $state([]);
 
 	/** @type {Task | null} */
 	top = $derived(this.stack.at(-1) ?? null);
 
 	constructor() {
-		$effect(() => {
-			localStorage.setItem('tasks', JSON.stringify(this.stack));
-		});
+		if (browser) {
+			this.stack = this.#load();
+			$effect(() => {
+				localStorage.setItem('tasks', JSON.stringify(this.stack));
+			});
+		}
 	}
 
 	/**

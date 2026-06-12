@@ -18,13 +18,13 @@
 
 	/** @type {Props} */
 	const {
-		color1 = '#ffba49',
-		color2 = '#20a39e',
-		color3 = '#e07be0',
-		color4 = '#ff674d',
-		color5 = '#272932',
-		color6 = '#ed6a5e',
-		speed = 1.5,
+		color1,
+		color2,
+		color3,
+		color4,
+		color5,
+		color6,
+		speed = 0.9,
 		intensity = 1.8,
 		grainIntensity = 0.08,
 		gradientSize = 0.45

@@ -6,14 +6,14 @@
 	const tasks = $state(new Stack());
 
 	/** @type {object} */
-	const colors = $state({
+	const colors = {
 		color1: '#f15a22',
 		color2: '#f15a22',
 		color3: '#40e0d0',
 		color4: '#f15a22',
 		color5: '#0a0e27',
 		color6: '#40e0d0'
-	});
+	};
 
 	/** @type {string} */
 	let title = $state('');
