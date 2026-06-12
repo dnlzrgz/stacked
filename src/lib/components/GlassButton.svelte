@@ -1,6 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition';
-	let { classes = '', children, ...rest } = $props();
+	let { children, ...rest } = $props();
 </script>
 
 <button

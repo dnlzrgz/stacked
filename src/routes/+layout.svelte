@@ -1,10 +1,23 @@
 <script>
+	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import favicon from '$lib/assets/favicon.svg';
 	import { m } from '$lib/paraglide/messages';
 	import { locales, localizeHref } from '$lib/paraglide/runtime';
+	import { pwaInfo } from 'virtual:pwa-info';
 	import './layout.css';
+
+	onMount(async () => {
+		if (pwaInfo) {
+			const { registerSW } = await import('virtual:pwa-register');
+
+			registerSW({
+				immediate: true
+			});
+		}
+	});
+
+	const webManifestLink = $derived(pwaInfo?.webManifest.linkTag ?? '');
 
 	let { children } = $props();
 	const title = 'Stacked';
@@ -17,7 +30,7 @@
 
 	<meta name="keywords" content={m.seo_keywords()} />
 
-	{#each locales as locale}
+	{#each locales as locale (locale)}
 		<link
 			rel="alternate"
 			hreflang={locale}
@@ -49,7 +62,9 @@
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-	<link rel="icon" href={favicon} />
+	<meta name="theme-color" content="#f15a22" />
+
+	{@html webManifestLink}
 </svelte:head>
 
 {@render children()}
