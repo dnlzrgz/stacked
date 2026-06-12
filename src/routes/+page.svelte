@@ -22,14 +22,14 @@
 
 <LiquidBackground {...colors}></LiquidBackground>
 
-<main class="grid h-full max-h-dvh grid-cols-1 grid-rows-[1fr_3fr] gap-6 px-3 py-6 font-sans">
+<main class="grid h-screen max-h-dvh grid-cols-1 grid-rows-[1fr_3fr] gap-6 px-3 py-6 font-sans">
 	<header>
 		<h1 class="text-3xl font-medium tracking-tight text-white">Stacked</h1>
 	</header>
 
 	<div>
 		<form
-			class="mx-auto mb-6 flex w-full gap-6 lg:max-w-1/2"
+			class="mx-auto mb-6 flex w-full gap-3 lg:max-w-1/2 lg:gap-6"
 			onsubmit={(e) => {
 				e.preventDefault();
 				tasks.add({ title });

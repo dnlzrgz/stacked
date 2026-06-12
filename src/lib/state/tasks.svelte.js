@@ -52,6 +52,20 @@ export class Stack {
 		}
 	}
 
+	#startTutorial() {
+		return [
+			new Task({
+				title: 'Welcome to Stacked'
+			}),
+			new Task({
+				title: 'Remove tasks with the delete button'
+			}),
+			new Task({
+				title: 'Complete tasks with the check button'
+			})
+		];
+	}
+
 	/**
 	 * Loads tasks from localStorage.
 	 * @returns {Task[]}
@@ -59,6 +73,13 @@ export class Stack {
 	#load() {
 		try {
 			const saved = localStorage.getItem('tasks');
+			const hasSeenTutorial = localStorage.getItem('onboarding-completed');
+
+			if (!saved && !hasSeenTutorial) {
+				localStorage.setItem('onboarding-completed', 'true');
+				return this.#startTutorial();
+			}
+
 			return saved ? JSON.parse(saved).map(Task.fromJSON) : [];
 		} catch {
 			localStorage.removeItem('tasks');
