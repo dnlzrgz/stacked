@@ -2,6 +2,7 @@
 	import { LiquidBackground, GlassButton } from '$lib/components';
 	import { Stack } from '$lib/state';
 	import { fade, fly } from 'svelte/transition';
+	import { m } from '$lib/paraglide/messages';
 
 	const tasks = $state(new Stack());
 
@@ -21,7 +22,7 @@
 
 <LiquidBackground {...colors}></LiquidBackground>
 
-<main class="grid min-h-screen grid-cols-1 grid-rows-[1fr_3fr] gap-6 px-3 py-6 font-sans">
+<main class="grid h-full max-h-dvh grid-cols-1 grid-rows-[1fr_3fr] gap-6 px-3 py-6 font-sans">
 	<header>
 		<h1 class="text-3xl font-medium tracking-tight text-white">Stacked</h1>
 	</header>
@@ -37,14 +38,14 @@
 		>
 			<input
 				type="text"
-				placeholder="Add a new task"
+				placeholder={m.task_input_placeholder()}
 				bind:value={title}
 				class="glass w-full rounded-lg p-3 text-lg text-white placeholder-white/70 focus:border-white focus:ring-0"
 			/>
 			<GlassButton
 				type="submit"
 				disabled={!title.trim()}
-				aria-label="Add task"
+				aria-label={m.add_task_aria()}
 				class="hover:border-white/70 disabled:text-white/70"
 			>
 				<svg
@@ -91,7 +92,7 @@
 			<div class="mt-9 flex w-full justify-center gap-24 lg:gap-12">
 				<GlassButton
 					onclick={() => tasks.remove()}
-					aria-label="Delete task"
+					aria-label={m.delete_task_aria()}
 					class="z-999 hover:border-red-400/80 hover:bg-red-400/10 hover:text-red-400/80"
 				>
 					<svg
@@ -105,7 +106,7 @@
 				</GlassButton>
 				<GlassButton
 					onclick={() => tasks.remove()}
-					aria-label="Mark task as complete"
+					aria-label={m.complete_task_aria}
 					class="z-999 hover:border-green-400/80 hover:bg-green-400/10 hover:text-green-400/80"
 				>
 					<svg
