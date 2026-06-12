@@ -1,33 +1,34 @@
 <script>
-	import { LiquidBackground, GlassButton, FractalCard } from '$lib/components';
+	import { LiquidBackground, GlassButton } from '$lib/components';
 	import { Stack } from '$lib/state';
+	import { fade, fly } from 'svelte/transition';
 
-	const tasks = new Stack();
+	const tasks = $state(new Stack());
 
-	const colors = $state(['#640d5f', '#b12c00', '#eb5b00', '#ffcc00', '#640d5f', '#eb5b00']);
-	const named_colors = $derived({
-		color1: colors[0] ?? '#000',
-		color2: colors[1] ?? '#000',
-		color3: colors[2] ?? '#000',
-		color4: colors[3] ?? '#000',
-		color5: colors[4] ?? '#000',
-		color6: colors[5] ?? '#000'
+	/** @type {object} */
+	const colors = $state({
+		color1: '#f15a22',
+		color2: '#f15a22',
+		color3: '#40e0d0',
+		color4: '#f15a22',
+		color5: '#0a0e27',
+		color6: '#40e0d0'
 	});
 
 	/** @type {string} */
 	let title = $state('');
 </script>
 
-<LiquidBackground {...named_colors}></LiquidBackground>
+<LiquidBackground {...colors}></LiquidBackground>
 
-<main class="grid min-h-screen grid-cols-1 grid-rows-[1fr_2fr] gap-6 px-3 py-6 font-sans">
+<main class="grid min-h-screen grid-cols-1 grid-rows-[1fr_3fr] gap-6 px-3 py-6 font-sans">
 	<header>
 		<h1 class="text-3xl font-medium tracking-tight text-white">Stacked</h1>
 	</header>
 
 	<div>
 		<form
-			class="mx-auto mb-6 flex w-full gap-3"
+			class="mx-auto mb-6 flex w-full gap-6 lg:max-w-1/2"
 			onsubmit={(e) => {
 				e.preventDefault();
 				tasks.add({ title });
@@ -38,7 +39,7 @@
 				type="text"
 				placeholder="Add a new task"
 				bind:value={title}
-				class="w-full rounded-lg border border-white/10 bg-white/10 p-3 text-lg text-white placeholder-white/70 backdrop-blur-lg focus:border-white focus:ring-0"
+				class="glass w-full rounded-lg p-3 text-lg text-white placeholder-white/70 focus:border-white focus:ring-0"
 			/>
 			<GlassButton
 				type="submit"
@@ -55,19 +56,43 @@
 					></path></svg
 				>
 			</GlassButton>
-			<!-- </button> -->
 		</form>
 
 		{#if tasks.top}
-			<FractalCard gradientColors={colors}>
-				{tasks.top.title}
-			</FractalCard>
+			<ul
+				in:fade={{ duration: 150 }}
+				out:fade={{ duration: 150 }}
+				class="relative h-96 overflow-hidden"
+			>
+				{#each tasks.stack as task, i (task.id)}
+					{@const j = tasks.stack.length - 1 - i}
+					<div
+						class="absolute inset-0 mx-auto h-full max-h-80 transition-all duration-150 ease-in-out lg:max-w-1/2"
+						style="
+			        z-index: {999 - j};
+			        transform:
+				        translateY({j * 24}px)
+				        scale({1 - j * 0.09});
+		          "
+					>
+						<li
+							class="glass flex h-full w-full items-center justify-center rounded-lg p-6 text-center font-sans text-2xl text-white"
+							in:fly={{ y: -60, duration: 150 }}
+							out:fly={{ y: -60, duration: 150 }}
+						>
+							{#if j == 0}
+								{tasks.top.title}
+							{/if}
+						</li>
+					</div>
+				{/each}
+			</ul>
 
-			<div class="mt-9 flex w-full justify-center gap-32">
+			<div class="mt-9 flex w-full justify-center gap-24 lg:gap-12">
 				<GlassButton
 					onclick={() => tasks.remove()}
 					aria-label="Delete task"
-					class="hover:border-red-400/80 hover:bg-red-400/10 hover:text-red-400/80"
+					class="z-999 hover:border-red-400/80 hover:bg-red-400/10 hover:text-red-400/80"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +106,7 @@
 				<GlassButton
 					onclick={() => tasks.remove()}
 					aria-label="Mark task as complete"
-					class="hover:border-green-400/80 hover:bg-green-400/10 hover:text-green-400/80"
+					class="z-999 hover:border-green-400/80 hover:bg-green-400/10 hover:text-green-400/80"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

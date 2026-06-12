@@ -13,3 +13,9 @@
 @theme {
 	--font-sans: 'Syne', sans-serif;
 }
+
+@layer components {
+	.glass {
+		@apply border-2 border-white/20 bg-white/10 backdrop-blur-2xl;
+	}
+}

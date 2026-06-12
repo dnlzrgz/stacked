@@ -1,11 +1,14 @@
 <script>
+	import { fade } from 'svelte/transition';
 	let { classes = '', children, ...rest } = $props();
 </script>
 
 <button
+	in:fade={{ duration: 150 }}
+	out:fade={{ duration: 150 }}
 	{...rest}
 	class={[
-		'cursor-pointer rounded-full border border-white/10 bg-white/10 p-3 text-white backdrop-blur-lg transition-colors duration-75 ease-in-out',
+		'glass cursor-pointer rounded-full p-3 text-white transition-colors duration-75 ease-in-out',
 		rest.class
 	]}
 >
