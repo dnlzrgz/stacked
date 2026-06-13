@@ -1,8 +1,8 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"task_input_placeholder": "Ajouter une nouvelle tâche",
-	"seo_description": "Une application de tâches surconçue axée sur la priorité et l'élan.",
+	"seo_description": "Une application de to-do sur-conçue qui ne vous permet de faire qu'une seule chose à la fois, développée avec Svelte.",
 	"seo_keywords": "tâches, productivité, todo, stack, svelte, sveltekit",
+	"task_input_placeholder": "Ajouter une nouvelle tâche",
 	"add_task_aria": "Ajouter une tâche",
 	"delete_task_aria": "Supprimer la tâche",
 	"complete_task_aria": "Marquer la tâche comme terminée"

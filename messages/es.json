@@ -1,6 +1,6 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"seo_description": "Una aplicación de tareas sobrediseñada centrada en la prioridad y el impulso.",
+	"seo_description": "Una aplicación de tareas pendientes sobrepensada que solo te permite hacer una cosa a la vez, creada con Svelte",
 	"seo_keywords": "tareas, productividad, lista de tareas, stack, svelte, sveltekit",
 	"task_input_placeholder": "Añade una tarea nueva",
 	"add_task_aria": "Añadir tarea",

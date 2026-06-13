@@ -5,6 +5,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { locales, localizeHref } from '$lib/paraglide/runtime';
 	import { pwaInfo } from 'virtual:pwa-info';
+	import { env } from '$env/dynamic/public';
 	import './layout.css';
 
 	onMount(async () => {
@@ -21,12 +22,15 @@
 
 	let { children } = $props();
 	const title = 'Stacked';
+
+	const siteUrl = env.PUBLIC_SITE_URL || 'http://localhost:5173';
 </script>
 
 <svelte:head>
 	<title>Stacked</title>
 	<meta name="title" content={title} />
 	<meta name="description" content={m.seo_description()} />
+	<link rel="canonical" href={siteUrl} />
 
 	<meta name="keywords" content={m.seo_keywords()} />
 
@@ -45,17 +49,15 @@
 	<meta property="og:site_name" content={title} />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={m.seo_description()} />
-	<!-- <meta property="og:url" content="https://your-domain.com" /> -->
-	<!-- <meta property="og:image" content="https://your-domain.com/og-image.png" /> -->
-	<meta property="og:image:width" content="1200" />
-	<meta property="og:image:height" content="630" />
+	<meta property="og:url" content={siteUrl} />
+	<meta property="og:image" content="{siteUrl}/screenshot.jpg" />
 
 	<meta property="og:image:alt" content="{title} preview image" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={m.seo_description()} />
-	<!-- <meta name="twitter:image" content="https://your-domain.com/og-image.png" /> -->
+	<meta name="twitter:image" content="{siteUrl}/screenshot.jpg" />
 
 	<meta name="twitter:image:alt" content="{title} preview image" />
 

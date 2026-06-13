@@ -5,5 +5,5 @@
 </p>
 
 <p align="center">
-The overengineered to-do application that only lets you do one thing at a time, built with Svelte.
+An overengineered to-do application that only lets you do one thing at a time, built with Svelte.
 </p>
